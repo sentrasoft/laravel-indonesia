@@ -1,0 +1,79 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateIndonesiaTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create(config('indonesia.table_prefix').'provinces', function (Blueprint $table) {
+            $table->char('id', 2);
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
+            $table->primary('id');
+            $table->timestamps();
+        });
+
+        Schema::create(config('indonesia.table_prefix').'cities', function (Blueprint $table) {
+            $table->char('id', 4);
+            $table->char('province_id', 2);
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
+            $table->primary('id');
+            $table->timestamps();
+
+            $table->foreign('province_id')
+                ->references('id')
+                ->on(config('indonesia.table_prefix').'provinces')
+                ->onUpdate('cascade')->onDelete('restrict');
+        });
+
+        Schema::create(config('indonesia.table_prefix').'districts', function (Blueprint $table) {
+            $table->char('id', 7);
+            $table->char('city_id', 4);
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
+            $table->primary('id');
+            $table->timestamps();
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on(config('indonesia.table_prefix').'cities')
+                ->onUpdate('cascade')->onDelete('restrict');
+        });
+
+        Schema::create(config('indonesia.table_prefix').'villages', function (Blueprint $table) {
+            $table->char('id', 10);
+            $table->char('district_id', 7);
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
+            $table->primary('id');
+            $table->timestamps();
+
+            $table->foreign('district_id')
+                ->references('id')
+                ->on(config('indonesia.table_prefix').'districts')
+                ->onUpdate('cascade')->onDelete('restrict');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop(config('indonesia.table_prefix').'villages');
+        Schema::drop(config('indonesia.table_prefix').'districts');
+        Schema::drop(config('indonesia.table_prefix').'cities');
+        Schema::drop(config('indonesia.table_prefix').'provinces');
+    }
+}

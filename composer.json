@@ -1,0 +1,62 @@
+{
+    "name": "sentrasoft/laravel-indonesia",
+    "description": "Berisi data Provinsi, Kabupaten/Kota, Kecamatan, dan Keluarahan/Desa di seluruh Indonesia",
+    "keywords": [
+        "sentrasoft",
+        "laravel",
+        "indonesia",
+        "provinsi",
+        "kota",
+        "kabupaten",
+        "kecamatan",
+        "kelurahan",
+        "desa"
+    ],
+    "homepage": "https://github.com/sentrasoft/laravel-indonesia",
+    "support": {
+        "issues": "https://github.com/sentrasoft/laravel-indonesia/issues",
+        "source": "https://github.com/sentrasoft/laravel-indonesia"
+    },
+    "license": "MIT",
+    "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Fahmi L. Ramdhani",
+            "email": "kontak@fahmi.io"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.2",
+        "phpunit/phpunit": "^9.3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sentrasoft\\Indonesia\\": "src/",
+            "Sentrasoft\\Indonesia\\Database\\Seeders\\": "database/seeders"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sentrasoft\\Indonesia\\IndonesiaServiceProvider"
+            ],
+            "aliases": {
+                "Indonesia": "Sentrasoft\\Indonesia\\Facades\\Indonesia"
+            }
+        }
+    }
+}
